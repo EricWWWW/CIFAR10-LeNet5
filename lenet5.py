@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*
+import sys
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -41,13 +42,13 @@ class LeNet5(nn.Module):
 
 def main():
     batchsize = 16
-    epochs = 100
-    #lenet = LeNet5()
-    lenet = torch.load("lenet.pt")
+    epochs = 2
+    # lenet = LeNet5()
+    lenet = torch.load(sys.path[0]+"./lenet.pt")
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.SGD(lenet.parameters(), lr=1e-3, momentum=0.9)
 
-    CIFAR_TRAIN_SET = torchvision.datasets.CIFAR10('./CIFAR10',
+    CIFAR_TRAIN_SET = torchvision.datasets.CIFAR10(sys.path[0]+'./CIFAR10',
                                                    train=True,
                                                    transform=transforms.Compose([
                                                        transforms.Resize(
@@ -57,7 +58,7 @@ def main():
                                                            (0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
                                                    ]),
                                                    download=False)
-    CIFAR_TEST_SET = torchvision.datasets.CIFAR10('./CIFAR10',
+    CIFAR_TEST_SET = torchvision.datasets.CIFAR10(sys.path[0]+'./CIFAR10',
                                                   train=False,
                                                   transform=transforms.Compose([
                                                       transforms.Resize(
